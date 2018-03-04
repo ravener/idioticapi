@@ -15,7 +15,7 @@ class Client:
         
     async def _get(self, endpoint, query):
         async with self.session.get("{}{}{}".format(self.base_url, endpoint, query), headers=self.headers) as resp:
-            data = await resp.json()
+            data = await resp.json(content_type=None)
         return bytes(data["data"]["data"])
         
     async def blame(self, text):
