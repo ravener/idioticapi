@@ -1,2 +1,0 @@
-class NotAvailable(Exception):
-    pass
