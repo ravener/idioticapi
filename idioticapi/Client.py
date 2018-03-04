@@ -74,7 +74,7 @@ class Client:
         return await self._get("/generators/challenger", "?avatar={}".format(avatar))
        
     async def bat_slap(self, slapper, slapped):
-        return await self._get("/generators/batslap" if seld.dev else "/batslap", "?slapper={}&slapped={}".format(slapper, slapped))
+        return await self._get("/generators/batslap" if self.dev else "/batslap", "?slapper={}&slapped={}".format(slapper, slapped))
        
     async def superpunch(self, puncher, punched):
         return await self._get("/generators/superpunch" if self.dev else "/superpunch", "?puncher={}&punched={}".format(puncher, punched))
