@@ -14,9 +14,7 @@ class Client:
         self.session = aiohttp.ClientSession() if session is None else session
         
     async def _get(self, endpoint, query):
-        async with self.session.get("{}{}{}".format(self.base_url, endpoint, query), headers=self.headers) as resp:
-            if resp.status != 200:
-                raise Exception("API Returned a non 200 code: {}".format(resp.status))
+        async with self.session.get("{}{}{}".format(self.base_url, endpoint, query.replace('webp','png')), headers=self.headers) as resp:
             data = await resp.json()
         return bytes(data["data"]["data"])
         
@@ -76,7 +74,7 @@ class Client:
         return await self._get("/generators/challenger", "?avatar={}".format(avatar))
        
     async def bat_slap(self, slapper, slapped):
-        return await self._get("/generators/batslap" if self.dev else "/batslap", "?slapper={}&slapped={}".format(slapper, slapped))
+        return await self._get("/generators/batslap" if seld.dev else "/batslap", "?slapper={}&slapped={}".format(slapper, slapped))
        
     async def superpunch(self, puncher, punched):
         return await self._get("/generators/superpunch" if self.dev else "/superpunch", "?puncher={}&punched={}".format(puncher, punched))
