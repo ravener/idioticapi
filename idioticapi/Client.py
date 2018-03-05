@@ -15,6 +15,8 @@ class Client:
         
     async def _get(self, endpoint, query):
         async with self.session.get("{}{}{}".format(self.base_url, endpoint, query.replace('webp','png')), headers=self.headers) as resp:
+            if resp.status != 200:
+                raise Exception("API Returned a non 200 code: {}".format(resp.status))
             data = await resp.json()
         return bytes(data["data"]["data"])
         
@@ -62,8 +64,8 @@ class Client:
     async def stepped(self, avatar):
         return await self._get("/generators/stepped" if self.dev else "/stepped", "?avatar={}".format(avatar))
        
-    async def tatto(self, avatar):
-        return await self._get("/generators/tatto" if self.dev else "/tatto", "?avatar={}".format(avatar))
+    async def tattoo(self, avatar):
+        return await self._get("/generators/tattoo" if self.dev else "/tattoo", "?avatar={}".format(avatar))
        
     async def vault_boy(self, avatar):
         return await self._get("/generators/vault" if self.dev else "/vault", "?avatar={}".format(avatar))
@@ -74,7 +76,7 @@ class Client:
         return await self._get("/generators/challenger", "?avatar={}".format(avatar))
        
     async def bat_slap(self, slapper, slapped):
-        return await self._get("/generators/batslap" if seld.dev else "/batslap", "?slapper={}&slapped={}".format(slapper, slapped))
+        return await self._get("/generators/batslap" if self.dev else "/batslap", "?slapper={}&slapped={}".format(slapper, slapped))
        
     async def superpunch(self, puncher, punched):
         return await self._get("/generators/superpunch" if self.dev else "/superpunch", "?puncher={}&punched={}".format(puncher, punched))
