@@ -17,5 +17,5 @@ setuptools.setup(
     license='MIT',
     packages=packages,
     include_package_data=True,
-    install_requires='aiohttp>=2.0.0,<2.3.0'
+    install_requires=['aiohttp>=2.0.0,<2.3.0']
 )
