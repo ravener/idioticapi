@@ -16,7 +16,7 @@ class Client:
     async def _get(self, endpoint, query):
         async with self.session.get("{}{}{}".format(self.base_url, endpoint, query), headers=self.headers) as resp:
             if resp.status != 200:
-                raise Exception(f"API Returned a non 200 code: {resp.status}")
+                raise Exception("API Returned a non 200 code: {}".format(resp.status))
             data = await resp.json()
         return bytes(data["data"]["data"])
         
