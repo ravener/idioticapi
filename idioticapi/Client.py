@@ -98,5 +98,5 @@ class Client:
         return await self._get("/generators/crush" if self.dev else "/crush","?crusher={}&crush={}".format(crushed, crush))
        
     async def welcome(self, avatar, is_bot, usertag, guild, version="gearz"):
-        return self._get("/greetings/{}_welcome".format(version) if self.dev else "/{}_welcome".format(version), "?guild={}&bot={}&usertag={}&avatar={}".format(guild, is_bot, usertag, avatar))
+        return await self._get("/greetings/{}_welcome".format(version) if self.dev else "/{}_welcome".format(version), "?guild={}&bot={}&usertag={}&avatar={}".format(guild, is_bot, usertag, avatar))
        
