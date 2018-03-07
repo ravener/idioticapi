@@ -1,5 +1,14 @@
 import aiohttp
 
+def br_invalid(br):
+    try:
+        if br >= 0 and br <= 255:
+            return False
+        else:
+            return True
+    except:
+        return True
+
 # --------------------
 # |     Classes      |
 # --------------------
@@ -334,6 +343,273 @@ class Client:
         if not self.dev:
             raise NotAvailable("Steam endpoint is disabled while in production")
         return await self._get("/generators/steam", "?avatar={}&text={}".format(avatar, text))
+
+    async def bobross(self, avatar):
+        '''Returns a bobross image in byte form.
+
+        Returns a bobross image in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("Bobross endpoint is disabled while in production")
+        return await self._get("/generators/bobross", "?avatar={}".format(avatar))
+
+    async def heavyfear(self, avatar):
+        '''Returns a heavyfear image in byte form.
+
+        Returns a heavyfear image in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("Heavyfear endpoint is disabled while in production")
+        return await self._get("/generators/heavyfear", "?avatar={}".format(avatar))
+
+    async def painting(self, avatar):
+        '''Returns a painting image in byte form.
+
+        Returns a painting image in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("Painting endpoint is disabled while in production")
+        return await self._get("/generators/painting", "?avatar={}".format(avatar))
+
+    async def waifuinsult(self, avatar):
+        '''Returns a waifuinsult image in byte form.
+
+        Returns a waifuinsult image in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("Waifuinsult endpoint is disabled while in production")
+        return await self._get("/generators/waifuinsult", "?avatar={}".format(avatar))
+
+    async def wreckit(self, avatar, text):
+        '''Returns a wreckit image in byte form.
+
+        Returns a wreckit image in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("Wreckit endpoint is disabled while in production")
+        return await self._get("/generators/wreckit", "?avatar={}".format(avatar))
+
+    async def approved(self, avatar):
+        '''Returns a approved image in byte form.
+
+        Returns a approved image in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("Approved endpoint is disabled while in production")
+        return await self._get("/overlays/approved", "?avatar={}".format(avatar))
+
+    async def rainbow(self, avatar):
+        '''Returns a rainbow image in byte form.
+
+        Returns a rainbow image in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("Rainbow endpoint is disabled while in production")
+        return await self._get("/overlays/rainbow", "?avatar={}".format(avatar))
+
+    async def rejected(self, avatar):
+        '''Returns a rejected image in byte form.
+
+        Returns a rejected image in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("Rejected endpoint is disabled while in production")
+        return await self._get("/overlays/rejected", "?avatar={}".format(avatar))
+
+    async def brightness(self, avatar, brightness):
+        '''Returns a image with brightness in byte form.
+
+        Returns a image with brightness in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        brightness (int): How much brightness to put on the image.
+        '''
+
+        if br_invalid(brightness):
+            raise InvalidParam('Invalid brightness')
+        if not self.dev:
+            raise NotAvailable("Brightness endpoint is disabled while in production")
+        return await self._get("/effects/brightness", "?avatar={}&brightness={}".format(avatar, brightness))
+
+    async def darkness(self, avatar, darkness):
+        '''Returns a image with darkness in byte form.
+
+        Returns a image with darkness in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        darkness (int): How much darkness to put on the image.
+        '''
+
+        if br_invalid(darkness):
+            raise InvalidParam('Invalid darkness')
+        if not self.dev:
+            raise NotAvailable("Darkness endpoint is disabled while in production")
+        return await self._get("/effects/darkness", "?avatar={}&darkness={}".format(avatar, darkness))
+
+    async def greyscale(self, avatar):
+        '''Returns a image with greyscale in byte form.
+
+        Returns a image with greyscale in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("Greyscale endpoint is disabled while in production")
+        return await self._get("/effects/greyscale", "?avatar={}".format(avatar))
+
+    async def invert(self, avatar):
+        '''Returns a image with invert in byte form.
+
+        Returns a image with invert in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("Invert endpoint is disabled while in production")
+        return await self._get("/effects/invert", "?avatar={}".format(avatar))
+
+    async def invert_greyscale(self, avatar):
+        '''Returns a image with invertGreyscale in byte form.
+
+        Returns a image with invertGreyscale in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("InvertGreyscale endpoint is disabled while in production")
+        return await self._get("/effects/invertGreyscale", "?avatar={}".format(avatar))\
+
+    async def sepia(self, avatar):
+        '''Returns a image with sepia in byte form.
+
+        Returns a image with sepia in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("Sepia endpoint is disabled while in production")
+        return await self._get("/effects/sepia", "?avatar={}".format(avatar))
+
+    async def silhouette(self, avatar):
+        '''Returns a image with silhouette in byte form.
+
+        Returns a image with silhouette in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        '''
+
+        if not self.dev:
+            raise NotAvailable("Silhouette endpoint is disabled while in production")
+        return await self._get("/effects/silhouette", "?avatar={}".format(avatar))
+
+    async def invert_threshold(self, avatar, threshold):
+        '''Returns a image with inverted threshold in byte form.
+
+        Returns a image with inverted threshold in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        threshold (int): How much threshold to put on the image.
+        '''
+
+        if br_invalid(threshold):
+            raise InvalidParam('Invalid threshold')
+        if not self.dev:
+            raise NotAvailable("Threshold endpoint is disabled while in production")
+        return await self._get("/effects/invertThreshold", "?avatar={}&threshold={}".format(avatar, threshold))
+
+    async def threshold(self, avatar, threshold):
+        '''Returns a image with threshold in byte form.
+
+        Returns a image with threshold in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): Link to the image to be filtered.
+        threshold (int): How much threshold to put on the image.
+        '''
+
+        if br_invalid(threshold):
+            raise InvalidParam('Invalid threshold')
+        if not self.dev:
+            raise NotAvailable("Threshold endpoint is disabled while in production")
+        return await self._get("/effects/threshold", "?avatar={}&threshold={}".format(avatar, threshold))
        
     async def crush(self, crusher, crush):
         '''Returns a crush image in byte form.
@@ -349,7 +625,7 @@ class Client:
 
         return await self._get("/generators/crush" if self.dev else "/crush","?crusher={}&crush={}".format(crushed, crush))
        
-    async def welcome(self, avatar, isbot, usertag, guild, version="gearz"):
+    async def welcome(self, avatar, isbot, usertag, guild=None, version="gearz"):
         '''Returns a welcome image in byte form.
 
         Returns a welcome image in byte form. Write 
@@ -363,11 +639,37 @@ class Client:
         guild (str): The guild's name.
         version (str): Which Welcome picture to use.
         '''
-
+        if not version == "gearz":
+            if not self.dev:
+                raise NotAvailable("Anime endpoint is disabled while in production")
+            else:
+                return await self._get("/greetings/{}_welcome".format(version), "?bot={}&usertag={}&avatar={}".format(is_bot, usertag, avatar))
         return await self._get("/greetings/{}_welcome".format(version) if self.dev else "/{}_welcome".format(version), "?guild={}&bot={}&usertag={}&avatar={}".format(guild, is_bot, usertag, avatar))
+
+    async def goodbye(self, avatar, isbot, usertag, version="gearz"):
+        '''Returns a goodbye image in byte form.
+
+        Returns a goodbye image in byte form. Write 
+        it to an image file.
+
+        Params:
+
+        avatar (str): A link to the image to be filtered.
+        isbot (bool): Whether the person is a bot or not.
+        usertag (str): The user's tag.
+        version (str): Which Goodbye picture to use.
+        '''
+        if not self.dev:
+            if not version == "gearz":
+                raise NotAvailable("Anime endpoint is disabled while in production")
+        return await self._get("/greetings/{}_goodbye".format(version) if self.dev else "/{}_goodbye".format(version), "?bot={}&usertag={}&avatar={}".format(is_bot, usertag, avatar))
        
 # --------------------
 # |     Errors       |
 # --------------------
-class NotAvailable(Exception):
+class IdioticError(Exception):
+    pass
+class NotAvailable(IdioticError):
+    pass
+class InvalidParam(IdioticError):
     pass
