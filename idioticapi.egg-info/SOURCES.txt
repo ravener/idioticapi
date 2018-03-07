@@ -1,0 +1,9 @@
+setup.cfg
+setup.py
+idioticapi/__init__.py
+idioticapi/client.py
+idioticapi.egg-info/PKG-INFO
+idioticapi.egg-info/SOURCES.txt
+idioticapi.egg-info/dependency_links.txt
+idioticapi.egg-info/requires.txt
+idioticapi.egg-info/top_level.txt
