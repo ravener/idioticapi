@@ -1,4 +1,5 @@
 import aiohttp
+import urllib.parse
 
 def br_invalid(br):
     try:
@@ -625,7 +626,7 @@ class Client:
 
         return await self._get("/generators/crush" if self.dev else "/crush","?crusher={}&crush={}".format(crushed, crush))
        
-    async def welcome(self, avatar, isbot, usertag, guild=None, version="gearz"):
+    async def welcome(self, avatar, is_bot, usertag, guild, version="gearz"):
         '''Returns a welcome image in byte form.
 
         Returns a welcome image in byte form. Write 
@@ -639,14 +640,16 @@ class Client:
         guild (str): The guild's name.
         version (str): Which Welcome picture to use.
         '''
+        usertag_fixed = urllib.parse.quote(usertag)
+        guild_fixed = urllib.parse.quote(guild)
         if not version == "gearz":
             if not self.dev:
                 raise NotAvailable("Anime endpoint is disabled while in production")
             else:
                 return await self._get("/greetings/{}_welcome".format(version), "?bot={}&usertag={}&avatar={}".format(is_bot, usertag, avatar))
-        return await self._get("/greetings/{}_welcome".format(version) if self.dev else "/{}_welcome".format(version), "?guild={}&bot={}&usertag={}&avatar={}".format(guild, is_bot, usertag, avatar))
+        return await self._get("/greetings/{}_welcome".format(version) if self.dev else "/{}_welcome".format(version), "?guild={}&bot={}&usertag={}&avatar={}".format(guild_fixed, is_bot, usertag_fixed, avatar))
 
-    async def goodbye(self, avatar, isbot, usertag, version="gearz"):
+    async def goodbye(self, avatar, is_bot, usertag, version="gearz"):
         '''Returns a goodbye image in byte form.
 
         Returns a goodbye image in byte form. Write 
@@ -659,10 +662,11 @@ class Client:
         usertag (str): The user's tag.
         version (str): Which Goodbye picture to use.
         '''
+        usertag_fixed = urllib.parse.quote(usertag)
         if not self.dev:
             if not version == "gearz":
                 raise NotAvailable("Anime endpoint is disabled while in production")
-        return await self._get("/greetings/{}_goodbye".format(version) if self.dev else "/{}_goodbye".format(version), "?bot={}&usertag={}&avatar={}".format(is_bot, usertag, avatar))
+        return await self._get("/greetings/{}_goodbye".format(version) if self.dev else "/{}_goodbye".format(version), "?bot={}&usertag={}&avatar={}".format(is_bot, usertag_fixed, avatar))
        
 # --------------------
 # |     Errors       |
