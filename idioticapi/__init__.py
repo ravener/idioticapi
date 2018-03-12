@@ -1,4 +1,4 @@
-from .client import Client
+from .Client import Client
 
 __version__ = "1.0.0"
 __github__ = "https://github.com/freetnt5852/idioticapi"
