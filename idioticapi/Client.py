@@ -68,7 +68,7 @@ class Client:
             if resp.status != 200:
                 raise Exception("API Returned a non 200 code: {}".format(resp.status))
             data = await resp.json()
-        return bytes(data["data"]["data"])
+        return bytes(data["data"])
         
     async def blame(self, name):
         '''Returns a blame image in byte form.
