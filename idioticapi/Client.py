@@ -31,8 +31,8 @@ class Client:
         token (str): This is your API key that you should have
         received from the API website.
 
-        dev (bool): Whether to connect to the developer API
-        endpoint or not. Defaults to False.
+        dev (bool): Whether to use the development API
+        version or not. Defaults to False.
 
         session (aiohttp.ClientSession): You can pass a ClientSession
         for the Client to use, if not, the Client will create its own
@@ -390,10 +390,10 @@ class Client:
             raise NotAvailable("Painting endpoint is disabled while in production")
         return await self._get("/generators/painting", "?avatar={}".format(avatar))
 
-    async def waifuinsult(self, avatar):
-        '''Returns a waifuinsult image in byte form.
+    async def waifu_insult(self, avatar):
+        '''Returns a waifu insult image in byte form.
 
-        Returns a waifuinsult image in byte form. Write 
+        Returns a waifu insult image in byte form. Write 
         it to an image file.
 
         Params:
@@ -405,7 +405,7 @@ class Client:
             raise NotAvailable("Waifuinsult endpoint is disabled while in production")
         return await self._get("/generators/waifuinsult", "?avatar={}".format(avatar))
 
-    async def wreckit(self, avatar, text):
+    async def wreckit(self, avatar):
         '''Returns a wreckit image in byte form.
 
         Returns a wreckit image in byte form. Write 
@@ -667,6 +667,26 @@ class Client:
             if not version == "gearz":
                 raise NotAvailable("Anime endpoint is disabled while in production")
         return await self._get("/greetings/{}_goodbye".format(version) if self.dev else "/{}_goodbye".format(version), "?bot={}&usertag={}&avatar={}".format(is_bot, usertag_fixed, avatar))
+        
+    async def confused(self, avatar, photo):
+        '''Returns a confused image in bytes.
+        
+        Params:
+        avatar (str): Avatar url.
+        photo (str): a url for second picture.
+        '''
+        if not self.dev: raise NotAvailable("Confused endpoint is disabled while in production")
+        return await self._get("/generators/confused", "?avatar={}&photo={}".format(avatar, photo))
+        
+    async def garbage(self, avatar):
+        '''Returns a garbage image in bytes.
+        
+        Params:
+        
+        avatar (str): Image url to use.
+        '''
+        if not self.dev: raise NotAvailable("Garbage endpoint is not available while in production")
+        return await self._get("/generators/garbage", "?avatar={}".format(avatar))
        
 # --------------------
 # |     Errors       |
