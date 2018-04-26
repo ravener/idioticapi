@@ -1,6 +1,6 @@
 # Idiotic-Wrapper (Python edition)
 This is an API wrapper for the [idiot's guide api](https://api.anidiots.guide)
-The wrapper is asynchronous and is hightly compatible with [discord.py](https://github.com/Rapptz/discord.py) Being built with aiohttp that comes with discord.py you don't have to add extra dependencies!
+The wrapper is asynchronous and is highly compatible with [discord.py](https://github.com/Rapptz/discord.py) Being built with aiohttp that comes with discord.py you don't have to add extra dependencies!
 
 ## Installation
 Currently its only possible to download it from github, make sure you have git installed.
