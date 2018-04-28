@@ -624,7 +624,7 @@ class Client:
         crush (str): Link to the image of the crush to be filtered.
         '''
 
-        return await self._get("/generators/crush" if self.dev else "/crush","?crusher={}&crush={}".format(crushed, crush))
+        return await self._get("/generators/crush" if self.dev else "/crush","?crusher={}&crush={}".format(crusher, crush))
        
     async def welcome(self, avatar, is_bot, usertag, guild, version="gearz"):
         '''Returns a welcome image in byte form.
