@@ -624,7 +624,7 @@ class Client:
         crush (str): Link to the image of the crush to be filtered.
         '''
 
-        return await self._get("/generators/crush" if self.dev else "/crush","?crusher={}&crush={}".format(crushed, crush))
+        return await self._get("/generators/crush" if self.dev else "/crush","?crusher={}&crush={}".format(crusher, crush))
        
     async def welcome(self, avatar, is_bot, usertag, guild, version="gearz"):
         '''Returns a welcome image in byte form.
@@ -685,8 +685,88 @@ class Client:
         
         avatar (str): Image url to use.
         '''
-        if not self.dev: raise NotAvailable("Garbage endpoint is not available while in production")
+        if not self.dev: raise NotAvailable("Garbage endpoint is disabled while in production")
         return await self._get("/generators/garbage", "?avatar={}".format(avatar))
+        
+    async def super_spank(self, spanker, spanked):
+        """Returns spanked image in bytes.
+        Params:
+        
+        spanker (str): image url to use for spanker
+        spanked (str): image url for spanked
+        """
+        if not self.dev: raise NotAvailable("Spanked endpoint is disabled while in production")
+        return await self._get("/generators/superspank", "?spanker={}&spanked={}".format(spanker, spanked))
+    
+    async def tinder_match(self, avatar, match):
+        """Returns a tinder match image in bytes
+        Params:
+        avatar (str): avatar image url
+        match (str): image url for match image.
+        """
+        if not self.dev: raise NotAvailable("Tinder Match endpoint is disabled while in production")
+        return await self._get("/generators/tinder", "?avatar={}&match={}".format(avatar, match))
+
+    async def colour(self, colour):
+        """Colour endpoint
+        Params:
+        colour (str): Supply a colour code in any of these supported formats `hex`, `rgb`, `rgba`
+        """
+        if not self.dev: raise NotAvailable("Colour endpoint is disabled while in production")
+        return await self._get("/generators/colour", "?colour={}".format(colour))
+    
+    async def color(self, color):
+        """Aliase for colour"""
+        return await self.colour(color)
+    
+    async def owoify(self, text):
+        """owoify a text.
+        Params:
+        text (str): The text you would like to use.
+        """
+        if not self.dev: raise NotAvailable("owoify endpoint is disabled while in production")
+        if type(text) != str: raise TypeError("Text must be string")
+        return await self._get("/text/owoify", "?text={}".format(text))
+    
+    async def mock(self, text):
+        """Mock a text
+        Params:
+        text (str): Text you would like to use
+        """
+        if not self.dev: raise NotAvailable("Mock endpoint is disabled while in production")
+        if type(text) != str: raise TypeError("Text must be a string")
+        return await self._get("/text/mock", "?text={}".format(text))
+    
+    async def tiny(self, text, style):
+        """Make a text tiny with a style.
+        Params:
+        text (str): Text to use.
+        style (str): One of tiny, superscript, subscript
+        """
+        if not self.dev: raise NotAvailable("Tiny text endpoint is disabled while in production")
+        if type(text) != str: raise TypeError("Text must be a string")
+        if style.lower() not in ["tiny", "superscript", "subscript"]: raise TypeError("Style must be one of tiny, superscript, subscript")
+        return await self._get("/text/tinytext", "?text={}&style={}".format(text, style.lower()))
+    
+    async def cursive(self, text, style):
+        """Make a cursive text with specified style
+        Params:
+        text (str): Text you want to use.
+        style (str): One of normal or bold
+        """
+        if not self.dev: raise NotAvailable("Cursive endpoint is disabled while in production")
+        if type(text) != str: raise TypeError("Text must be a string")
+        if style.lower() not in ["bold", "normal"]: raise TypeError("Style must be one of bold or normal")
+        return await self._get("/text/cursive", "?text={}&style={}".format(text, style.lower()))
+    
+    async def vapor(self, text):
+        """Returns a vaporwave text
+        Params:
+        text (str): Text you want to use.
+        """
+        if not self.dev: raise NotAvailable("Vapor endpoint is disabled while in production")
+        if type(text) != str: raise TypeError("Text must be a string")
+        return await self._get("/text/vaporwave", "?text={}".format(text))
        
 # --------------------
 # |     Errors       |
