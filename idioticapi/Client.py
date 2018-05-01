@@ -69,6 +69,17 @@ class Client:
                 raise Exception("API Returned a non 200 code: {}".format(resp.status))
             data = await resp.json()
         return bytes(data["data"])
+    
+    async def _text(self, endpoint, text, style=None):
+        """Helper function for text endpoints."""
+        params = { "text": text }
+        if style: params["style"] = style
+        async with self.session.get("{}/text/{}".format(self.base_url, endpoint), headers=self.headers, params=params) as resp:
+        # TODO, use params for all querystrings instead?
+            if resp.status != 200:
+                raise Exception("API Returned a non 200 code: {}".format(resp.status))
+            data = await resp.json()
+            return data["text"]
         
     async def blame(self, name):
         '''Returns a blame image in byte form.
@@ -726,7 +737,7 @@ class Client:
         """
         if not self.dev: raise NotAvailable("owoify endpoint is disabled while in production")
         if type(text) != str: raise TypeError("Text must be string")
-        return await self._get("/text/owoify", "?text={}".format(text))
+        return await self._text("owoify", text)
     
     async def mock(self, text):
         """Mock a text
@@ -735,7 +746,7 @@ class Client:
         """
         if not self.dev: raise NotAvailable("Mock endpoint is disabled while in production")
         if type(text) != str: raise TypeError("Text must be a string")
-        return await self._get("/text/mock", "?text={}".format(text))
+        return await self._text("mock", text)
     
     async def tiny(self, text, style):
         """Make a text tiny with a style.
@@ -746,7 +757,7 @@ class Client:
         if not self.dev: raise NotAvailable("Tiny text endpoint is disabled while in production")
         if type(text) != str: raise TypeError("Text must be a string")
         if style.lower() not in ["tiny", "superscript", "subscript"]: raise TypeError("Style must be one of tiny, superscript, subscript")
-        return await self._get("/text/tinytext", "?text={}&style={}".format(text, style.lower()))
+        return await self._text("tinytext", text, style.lower())
     
     async def cursive(self, text, style):
         """Make a cursive text with specified style
@@ -757,7 +768,7 @@ class Client:
         if not self.dev: raise NotAvailable("Cursive endpoint is disabled while in production")
         if type(text) != str: raise TypeError("Text must be a string")
         if style.lower() not in ["bold", "normal"]: raise TypeError("Style must be one of bold or normal")
-        return await self._get("/text/cursive", "?text={}&style={}".format(text, style.lower()))
+        return await self._text("cursive", text, style.lower())
     
     async def vapor(self, text):
         """Returns a vaporwave text
@@ -766,7 +777,7 @@ class Client:
         """
         if not self.dev: raise NotAvailable("Vapor endpoint is disabled while in production")
         if type(text) != str: raise TypeError("Text must be a string")
-        return await self._get("/text/vaporwave", "?text={}".format(text))
+        return await self._text("vaporwave", text)
        
 # --------------------
 # |     Errors       |
@@ -777,3 +788,4 @@ class NotAvailable(IdioticError):
     pass
 class InvalidParam(IdioticError):
     pass
+# This file went longer than i expected :p
