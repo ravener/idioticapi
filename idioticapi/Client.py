@@ -42,7 +42,7 @@ class Client:
         self.token = token
         self.dev = dev
         self.headers = {
-        	"Authorization" if self.dev else "token": self.token
+          "Authorization" if self.dev else "token": self.token
         }
         self.base_url = "https://dev.anidiots.guide" if self.dev else "https://api.anidiots.guide"
         self.session = aiohttp.ClientSession() if session is None else session
@@ -51,40 +51,40 @@ class Client:
         '''Return a eval-safe string representation of the object.'''
 
         return "<IdioticAPI Client>"
-    
+
     def __str__(self):
         '''Return a string representation of the object.'''
 
         return "<IdioticAPI Client, dev={}, url={}>".format(self.dev, self.base_url)
-        
+
     async def _get(self, endpoint, query):
         '''Request the actual return from the API.
 
-        Request the actual return from the API. Should 
+        Request the actual return from the API. Should
         never be called directly.
         '''
 
-        async with self.session.get("{}{}{}".format(self.base_url, endpoint, query.replace('webp','png')), headers=self.headers) as resp:
+        async with self.session.get("{}{}{}".format(self.base_url, endpoint, query.replace('webp', 'png')), headers=self.headers) as resp:
             if resp.status != 200:
                 raise Exception("API Returned a non 200 code: {}".format(resp.status))
             data = await resp.json()
         return bytes(data["data"])
-    
+
     async def _text(self, endpoint, text, style=None):
         """Helper function for text endpoints."""
         params = { "text": text }
         if style: params["style"] = style
         async with self.session.get("{}/text/{}".format(self.base_url, endpoint), headers=self.headers, params=params) as resp:
-        # TODO, use params for all querystrings instead?
+            # TODO, use params for all querystrings instead?
             if resp.status != 200:
                 raise Exception("API Returned a non 200 code: {}".format(resp.status))
             data = await resp.json()
             return data["text"]
-        
+
     async def blame(self, name):
         '''Returns a blame image in byte form.
 
-        Returns a blame image in byte form. Write 
+        Returns a blame image in byte form. Write
         it to an image file.
 
         Params:
@@ -93,11 +93,11 @@ class Client:
         '''
 
         return await self._get("/generators/blame" if self.dev else "/blame", "?name={}".format(name))
-        
+
     async def triggered(self, avatar):
         '''Returns a triggered image in byte form.
 
-        Returns a triggered image in byte form. Write 
+        Returns a triggered image in byte form. Write
         it to an image file.
 
         Params:
@@ -106,11 +106,11 @@ class Client:
         '''
 
         return await self._get("/generators/triggered" if self.dev else "/triggered", "?avatar={}".format(avatar))
-       
+
     async def wanted(self, avatar):
         '''Returns a wanted image in byte form.
 
-        Returns a wanted image in byte form. Write 
+        Returns a wanted image in byte form. Write
         it to an image file.
 
         Params:
@@ -119,11 +119,11 @@ class Client:
         '''
 
         return await self._get("/generators/wanted" if self.dev else "/wanted", "?avatar={}".format(avatar))
-    
+
     async def missing(self, avatar, text):
         '''Returns a missing image in byte form.
 
-        Returns a missing image in byte form. Write 
+        Returns a missing image in byte form. Write
         it to an image file.
 
         Params:
@@ -135,11 +135,11 @@ class Client:
         if not self.dev:
             raise NotAvailable("Missing endpoint is disabled while in production")
         return await self._get("/generators/missing", "?avatar={}&text={}".format(avatar, text))
-    
+
     async def pls(self, name):
         '''Returns a pls image in byte form.
 
-        Returns a pls image in byte form. Write 
+        Returns a pls image in byte form. Write
         it to an image file.
 
         Params:
@@ -148,11 +148,11 @@ class Client:
         '''
 
         return await self._get("/generators/pls" if self.dev else "/pls", "?name={}".format(name))
-    
+
     async def snapchat(self, text):
         '''Returns a snapchat image in byte form.
 
-        Returns a snapchat image in byte form. Write 
+        Returns a snapchat image in byte form. Write
         it to an image file.
 
         Params:
@@ -161,11 +161,11 @@ class Client:
         '''
 
         return await self._get("/generators/snapchat" if self.dev else "/snapchat", "?text={}".format(text))
-    
+
     async def achievement(self, avatar, text):
         '''Returns a achievement image in byte form.
 
-        Returns a achievement image in byte form. Write 
+        Returns a achievement image in byte form. Write
         it to an image file.
 
         Params:
@@ -174,12 +174,12 @@ class Client:
         text (str): Text to be written on the image.
         '''
 
-        return await self._get("/generators/achievement" if self.dev else "/achievement","?avatar={}&text={}".format(avatar, text))
-        
+        return await self._get("/generators/achievement" if self.dev else "/achievement", "?avatar={}&text={}".format(avatar, text))
+
     async def thesearch(self, avatar, text):
         '''Returns a thesearch image in byte form.
 
-        Returns a thesearch image in byte form. Write 
+        Returns a thesearch image in byte form. Write
         it to an image file.
 
         Params:
@@ -189,11 +189,11 @@ class Client:
         '''
 
         return await self._get("/generators/thesearch" if self.dev else "/thesearch", "?avatar={}&text={}".format(avatar, text))
-       
+
     async def beautiful(self, avatar):
         '''Returns a beautiful image in byte form.
 
-        Returns a beautiful image in byte form. Write 
+        Returns a beautiful image in byte form. Write
         it to an image file.
 
         Params:
@@ -202,11 +202,11 @@ class Client:
         '''
 
         return await self._get("/generators/beautiful" if self.dev else "/beautiful", "?avatar={}".format(avatar))
-       
+
     async def facepalm(self, avatar):
         '''Returns a facepalm image in byte form.
 
-        Returns a facepalm image in byte form. Write 
+        Returns a facepalm image in byte form. Write
         it to an image file.
 
         Params:
@@ -215,11 +215,11 @@ class Client:
         '''
 
         return await self._get("/generators/facepalm" if self.dev else "/facepalm", "?avatar={}".format(avatar))
-   
+
     async def respect(self, avatar):
         '''Returns a respect image in byte form.
 
-        Returns a respect image in byte form. Write 
+        Returns a respect image in byte form. Write
         it to an image file.
 
         Params:
@@ -228,11 +228,11 @@ class Client:
         '''
 
         return await self._get("/generators/respect" if self.dev else "/respect", "?avatar={}".format(avatar))
-       
+
     async def stepped(self, avatar):
         '''Returns a stepped image in byte form.
 
-        Returns a stepped image in byte form. Write 
+        Returns a stepped image in byte form. Write
         it to an image file.
 
         Params:
@@ -241,11 +241,11 @@ class Client:
         '''
 
         return await self._get("/generators/stepped" if self.dev else "/stepped", "?avatar={}".format(avatar))
-       
+
     async def tattoo(self, avatar):
         '''Returns a tattoo image in byte form.
 
-        Returns a tattoo image in byte form. Write 
+        Returns a tattoo image in byte form. Write
         it to an image file.
 
         Params:
@@ -254,11 +254,11 @@ class Client:
         '''
 
         return await self._get("/generators/tattoo" if self.dev else "/tattoo", "?avatar={}".format(avatar))
-       
+
     async def vault(self, avatar):
         '''Returns a vault image in byte form.
 
-        Returns a vault image in byte form. Write 
+        Returns a vault image in byte form. Write
         it to an image file.
 
         Params:
@@ -555,12 +555,12 @@ class Client:
 
         if not self.dev:
             raise NotAvailable("InvertGreyscale endpoint is disabled while in production")
-        return await self._get("/effects/invertGreyscale", "?avatar={}".format(avatar))\
+        return await self._get("/effects/invertGreyscale", "?avatar={}".format(avatar))
 
     async def sepia(self, avatar):
         '''Returns a image with sepia in byte form.
 
-        Returns a image with sepia in byte form. Write 
+        Returns a image with sepia in byte form. Write
         it to an image file.
 
         Params:
@@ -575,7 +575,7 @@ class Client:
     async def silhouette(self, avatar):
         '''Returns a image with silhouette in byte form.
 
-        Returns a image with silhouette in byte form. Write 
+        Returns a image with silhouette in byte form. Write
         it to an image file.
 
         Params:
@@ -590,7 +590,7 @@ class Client:
     async def invert_threshold(self, avatar, threshold):
         '''Returns a image with inverted threshold in byte form.
 
-        Returns a image with inverted threshold in byte form. Write 
+        Returns a image with inverted threshold in byte form. Write
         it to an image file.
 
         Params:
@@ -608,7 +608,7 @@ class Client:
     async def threshold(self, avatar, threshold):
         '''Returns a image with threshold in byte form.
 
-        Returns a image with threshold in byte form. Write 
+        Returns a image with threshold in byte form. Write
         it to an image file.
 
         Params:
@@ -622,7 +622,7 @@ class Client:
         if not self.dev:
             raise NotAvailable("Threshold endpoint is disabled while in production")
         return await self._get("/effects/threshold", "?avatar={}&threshold={}".format(avatar, threshold))
-       
+
     async def crush(self, crusher, crush):
         '''Returns a crush image in byte form.
 
@@ -635,12 +635,12 @@ class Client:
         crush (str): Link to the image of the crush to be filtered.
         '''
 
-        return await self._get("/generators/crush" if self.dev else "/crush","?crusher={}&crush={}".format(crusher, crush))
-       
+        return await self._get("/generators/crush" if self.dev else "/crush", "?crusher={}&crush={}".format(crusher, crush))
+
     async def welcome(self, avatar, is_bot, usertag, guild, version="gearz"):
         '''Returns a welcome image in byte form.
 
-        Returns a welcome image in byte form. Write 
+        Returns a welcome image in byte form. Write
         it to an image file.
 
         Params:
@@ -663,7 +663,7 @@ class Client:
     async def goodbye(self, avatar, is_bot, usertag, version="gearz"):
         '''Returns a goodbye image in byte form.
 
-        Returns a goodbye image in byte form. Write 
+        Returns a goodbye image in byte form. Write
         it to an image file.
 
         Params:
@@ -678,7 +678,7 @@ class Client:
             if not version == "gearz":
                 raise NotAvailable("Anime endpoint is disabled while in production")
         return await self._get("/greetings/{}_goodbye".format(version) if self.dev else "/{}_goodbye".format(version), "?bot={}&usertag={}&avatar={}".format(is_bot, usertag_fixed, avatar))
-        
+
     async def confused(self, avatar, photo):
         '''Returns a confused image in bytes.
         
@@ -688,27 +688,26 @@ class Client:
         '''
         if not self.dev: raise NotAvailable("Confused endpoint is disabled while in production")
         return await self._get("/generators/confused", "?avatar={}&photo={}".format(avatar, photo))
-        
+
     async def garbage(self, avatar):
         '''Returns a garbage image in bytes.
-        
+
         Params:
-        
+
         avatar (str): Image url to use.
         '''
         if not self.dev: raise NotAvailable("Garbage endpoint is disabled while in production")
         return await self._get("/generators/garbage", "?avatar={}".format(avatar))
-        
+
     async def super_spank(self, spanker, spanked):
         """Returns spanked image in bytes.
         Params:
-        
+
         spanker (str): image url to use for spanker
         spanked (str): image url for spanked
         """
         if not self.dev: raise NotAvailable("Spanked endpoint is disabled while in production")
         return await self._get("/generators/superspank", "?spanker={}&spanked={}".format(spanker, spanked))
-    
     async def tinder_match(self, avatar, match):
         """Returns a tinder match image in bytes
         Params:
@@ -747,7 +746,6 @@ class Client:
         if not self.dev: raise NotAvailable("Mock endpoint is disabled while in production")
         if type(text) != str: raise TypeError("Text must be a string")
         return await self._text("mock", text)
-    
     async def tiny(self, text, style):
         """Make a text tiny with a style.
         Params:
@@ -758,7 +756,7 @@ class Client:
         if type(text) != str: raise TypeError("Text must be a string")
         if style.lower() not in ["tiny", "superscript", "subscript"]: raise TypeError("Style must be one of tiny, superscript, subscript")
         return await self._text("tinytext", text, style.lower())
-    
+ 
     async def cursive(self, text, style):
         """Make a cursive text with specified style
         Params:
@@ -769,7 +767,7 @@ class Client:
         if type(text) != str: raise TypeError("Text must be a string")
         if style.lower() not in ["bold", "normal"]: raise TypeError("Style must be one of bold or normal")
         return await self._text("cursive", text, style.lower())
-    
+
     async def vapor(self, text):
         """Returns a vaporwave text
         Params:
@@ -778,7 +776,89 @@ class Client:
         if not self.dev: raise NotAvailable("Vapor endpoint is disabled while in production")
         if type(text) != str: raise TypeError("Text must be a string")
         return await self._text("vaporwave", text)
-       
+    
+    async def time(self, avatar):
+        """Returns a time image in bytes.
+        Params:
+        avatar (str): Avatar url to use.
+        """
+        if not self.dev: raise NotAvailable("Time endpoint is disabled while in production")
+        return await self._get("/generators/time", "?avatar={}".format(avatar))
+    
+    async def ignore(self, avatar):
+        """Returns an ignore image in bytes.
+        Params:
+        avatar (str): Avatar url to use.
+        """
+        if not self.dev: raise NotAvailable("Ignore endpoint is disabled while in production")
+        return await self._get("/generators/ignore", "?avatar={}".format(avatar))
+     
+    async def hide(self, avatar):
+        """Returns a hide image in bytes.
+        Params:
+        avatar (str): Avatar url to use.
+        """
+        if not self.dev: raise NotAvailable("Hide endpoint is disabled while in production")
+        return await self._get("/generators/hide", "?avatar={}".format(avatar))
+        
+    async def hates(self, avatar):
+        """Returns a time image in bytes.
+        Params:
+        avatar (str): Avatar url to use.
+        """
+        if not self.dev: raise NotAvailable("Hates endpoint is disabled while in production")
+        return await self._get("/generators/hates", "?avatar={}".format(avatar))
+        
+    async def girls(self, avatar):
+        """Returns girls image in bytes.
+        Params:
+        avatar (str): Avatar url to use.
+        """
+        if not self.dev: raise NotAvailable("Girls endpoint is disabled while in production")
+        return await self._get("/generators/girls", "?avatar={}".format(avatar))
+    
+    async def zerotwo(self, avatar):
+        """Returns a Zero Two image in bytes.
+        Params:
+        avatar (str): Avatar url to use.
+        """
+        if not self.dev: raise NotAvailable("Zero Two endpoint is disabled while in production")
+        return await self._get("/generators/02picture", "?avatar={}".format(avatar))
+    
+    async def coffee(self, text1, text2):
+        """Returns a coffee image in bytes.
+        Params:
+        text1 (str): Text 1 to use
+        text2 (str): Text 2 to use
+        """
+        if not self.dev: raise NotAvailable("Coffee endpoint is disabled while in production")
+        return await self._get("/generators/coffee", "?text1={}&text2={}".format(text1, text2))
+    
+    async def religion(self, avatar):
+        """Returns a religion image in bytes.
+        Params:
+        avatar (str): Avatar url to use.
+        """
+        if not self.dev: raise NotAvailable("Religion endpoint is disabled while in production")
+        return await self._get("/generators/religion", "?avatar={}".format(avatar))
+        
+    async def suggestion(self, avatar, text):
+        """Returns a suggestion image in bytes.
+        Params:
+        avatar (str): Avatar url to use.
+        text (str): Text to use.
+        """
+        if not self.dev: raise NotAvailable("Suggestion endpoint is disabled while in production")
+        return await self._get("/generators/suggestion", "?avatar={}&suggestion={}".format(avatar, text))
+
+
+
+
+
+
+ 
+
+
 # --------------------
 # |     Errors       |
 # --------------------
