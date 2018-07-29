@@ -851,6 +851,61 @@ class Client:
         if not self.dev: raise NotAvailable("Suggestion endpoint is disabled while in production")
         return await self._get("/generators/suggestion", "?avatar={}&suggestion={}".format(avatar, text))
 
+    async def kirby(self, avatar, text):
+        """Kirby School endpoint
+        params:
+        avatar (str): Image you expect to be used
+        text (str): Supply the build up text
+        returns (bytes) 
+        """
+        if not self.dev:
+            raise NotAvailable("Kirby School endpoint is disabled while in production")
+        return await self._get("/generators/kirby", "?avatar={}&text={}".format(avatar, text))
+
+    async def virtual(self, avatar, text):
+        """Virtual endpoint
+        params:
+        avatar (str): Image you expect to be used
+        returns (bytes) 
+        """
+        if not self.dev:
+            raise NotAvailable("Virtual endpoint is disabled while in production")
+        return await self._get("/generators/vr", "?avatar={}".format(avatar))
+
+    async def changemymind(self, avatar, text):
+        """Change my mind endpoint
+        params:
+        avatar (str): Image you expect to be used
+        text (str): Supply the build up text
+        returns (bytes) 
+        """
+        if not self.dev:
+            raise NotAvailable("Change my mind endpoint is disabled while in production")
+        return await self._get("/generators/changemymind", "?avatar={}&text={}".format(avatar, text))
+        
+    async def sniper(self, avatar):
+        """Sniper endpoint
+        params:
+        avatar (str): Image you expect to be used
+        returns (bytes) 
+        """
+        if not self.dev:
+            raise NotAvailable("Sniper endpoint is disabled while in production")
+        return await self._get("/generators/sniper", "?avatar={}".format(avatar))
+
+    async def osu(self, user, theme = "dark"):
+        """osu! endpoint
+        params:
+        user (str): This is the osu! username.
+        theme (str): Select between 3 valid themes, light, dark and darker
+        returns (bytes) 
+        """
+        if not self.dev:
+            raise NotAvailable("osu endpoint is disabled while in production")
+        if theme not in ("dark", "light", "darker"):
+            raise TypeError("Invalid theme, theme can only be one of dark, light, darker")
+        return await self._get("/generators/osu", "?user={}&theme={}".format(user, theme))
+                    
 
 
 
