@@ -639,7 +639,7 @@ class Client:
 
     async def welcome(self, avatar, is_bot, usertag, guild, version="gearz"):
         '''Returns a welcome image in byte form.
-
+        Deprecated see Client#greeting
         Returns a welcome image in byte form. Write
         it to an image file.
 
@@ -662,7 +662,7 @@ class Client:
 
     async def goodbye(self, avatar, is_bot, usertag, version="gearz"):
         '''Returns a goodbye image in byte form.
-
+        Deprecated see Client#greeting
         Returns a goodbye image in byte form. Write
         it to an image file.
 
@@ -905,8 +905,23 @@ class Client:
         if theme not in ("dark", "light", "darker"):
             raise TypeError("Invalid theme, theme can only be one of dark, light, darker")
         return await self._get("/generators/osu", "?user={}&theme={}".format(user, theme))
-                    
 
+    async def greeting(self, Type, version, bot, avatar, username, discriminator, guildName, memberCount, message = ""):
+        """
+        The new greetings endpoint
+        params:
+        Type: (str) Type of this greeting either welcome or farewell
+        version: (str) The greetings version either gearz or anime
+        bot: (bool) Wether the user is a bot
+        avatar: (str) User's avatar url
+        username: (str) Username
+        discriminator: (str) User's last 4 digit discriminator
+        guildName: (str) The server's name
+        memberCount: (str) Current server's member count
+        message: (str) = '' An optional message for the greeting
+        returns: (bytes)
+        """
+        return self._get("/greetings/unified", "?version={}&type={}&bot={}&avatar={}&username={}&discriminator={}&guildName={}&memberCount={}&message={}".format(version, Type, str(bot).lower(), avatar, username, discriminator, guildName, memberCount, message))
 
 
 
