@@ -22,7 +22,7 @@ class Client:
     of the API's endpoints.
     '''
 
-    def __init__(self, token, dev=False, session=None):
+    def __init__(self, token, dev=False):
         '''Constructs the Client.
 
         Constructs the Client to be used for requests.
@@ -45,7 +45,6 @@ class Client:
           "Authorization" if self.dev else "token": self.token
         }
         self.base_url = "https://dev.anidiots.guide" if self.dev else "https://api.anidiots.guide"
-        self.session = aiohttp.ClientSession() if session is None else session
 
     def __repr__(self):
         '''Return a eval-safe string representation of the object.'''
@@ -64,7 +63,7 @@ class Client:
         never be called directly.
         '''
 
-        async with self.session.get("{}{}{}".format(self.base_url, endpoint, query.replace('webp', 'png')), headers=self.headers) as resp:
+        async with aiohttp.ClientSession().get("{}{}{}".format(self.base_url, endpoint, query.replace('webp', 'png')), headers=self.headers) as resp:
             if resp.status != 200:
                 raise Exception("API Returned a non 200 code: {}".format(resp.status))
             data = await resp.json()
@@ -74,7 +73,7 @@ class Client:
         """Helper function for text endpoints."""
         params = { "text": text }
         if style: params["style"] = style
-        async with self.session.get("{}/text/{}".format(self.base_url, endpoint), headers=self.headers, params=params) as resp:
+        async with aiohttp.ClientSession().get("{}/text/{}".format(self.base_url, endpoint), headers=self.headers, params=params) as resp:
             # TODO, use params for all querystrings instead?
             if resp.status != 200:
                 raise Exception("API Returned a non 200 code: {}".format(resp.status))
