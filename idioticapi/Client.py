@@ -921,7 +921,7 @@ class Client:
         message: (str) = '' An optional message for the greeting
         returns: (bytes)
         """
-        return self._get("/greetings/unified", "?version={}&type={}&bot={}&avatar={}&username={}&discriminator={}&guildName={}&memberCount={}&message={}".format(version, Type, str(bot).lower(), avatar, username, discriminator, guildName, memberCount, message))
+        return await self._get("/greetings/unified", "?version={}&type={}&bot={}&avatar={}&username={}&discriminator={}&guildName={}&memberCount={}&message={}".format(version, Type, str(bot).lower(), avatar, username, discriminator, guildName, memberCount, message))
 
 
 
