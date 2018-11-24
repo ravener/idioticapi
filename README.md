@@ -23,7 +23,7 @@ async def main():
     
 asyncio.get_event_loop().run_until_complete(main())
 ```
-Discord.py example
+Discord.py rewrite example
 ```python
 import idioticapi
 # you want easy access to it so maybe attach it to your bot # object, this allowes access to cogs as well and you don't have to remake the class everywhere.
@@ -34,6 +34,16 @@ bot.api = idioticapi.Client("Your api key", dev=True)
 async def blame(ctx, *, text):
     await ctx.send(file=discord.File(await bot.api.blame(text), "blame.png"))
 # a simple example, change it to whatever you like to fit in a cog etc, also works with old d.py 0.16.x just change the way i sent things.
+```
+Discord.py async example
+```python
+import idioticapi
+
+bot.api = idioticapi.Client("Your api key", dev=True)
+
+@bot.command(pass_context=True)
+async def blame(ctx, *, text):
+    await bot.send_file(ctx.message.channel, await bot.api.blame(text), "blame.png")
 ```
 More info:
 
