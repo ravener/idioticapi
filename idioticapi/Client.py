@@ -1,5 +1,6 @@
 import aiohttp
 import urllib.parse
+import asyncio
 
 def br_invalid(br):
     try:
@@ -41,6 +42,7 @@ class Client:
 
         self.token = token
         self.dev = dev
+        self.session = aiohttp.ClientSession(loop=asyncio.get_event_loop()) # Fixed the UserInputError.
         self.headers = {
           "Authorization" if self.dev else "token": self.token
         }
@@ -63,7 +65,7 @@ class Client:
         never be called directly.
         '''
 
-        async with aiohttp.ClientSession().get("{}{}{}".format(self.base_url, endpoint, query.replace('webp', 'png')), headers=self.headers) as resp:
+        async with self.session.get("{}{}{}".format(self.base_url, endpoint, query.replace('webp', 'png')), headers=self.headers) as resp:
             if resp.status != 200:
                 raise Exception("API Returned a non 200 code: {}".format(resp.status))
             data = await resp.json()
@@ -73,7 +75,7 @@ class Client:
         """Helper function for text endpoints."""
         params = { "text": text }
         if style: params["style"] = style
-        async with aiohttp.ClientSession().get("{}/text/{}".format(self.base_url, endpoint), headers=self.headers, params=params) as resp:
+        async with self.session.get("{}/text/{}".format(self.base_url, endpoint), headers=self.headers, params=params) as resp:
             # TODO, use params for all querystrings instead?
             if resp.status != 200:
                 raise Exception("API Returned a non 200 code: {}".format(resp.status))
